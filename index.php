@@ -1,36 +1,29 @@
-<?php include("config/connect.php"); ?>
-<?php include("templates/header.php"); ?>
+<?php
+include("config/connect.php");
 
-<div style="padding: 20px;" class="mb-3">
-    <form action="actions/user_save.php" method="post">
-        <!--  -->
-        <label for="" class="form-label"><strong>Name</strong></label>
-        <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre">
-        <br>
-        <!--  -->
-        <label for="" class="form-label"><strong>Apellido</strong></label>
-        <input type="text" class="form-control" name="apellido" placeholder="Ingresa tus apellidos">
-        <br>
-        <!--  -->
-        <label for="" class="form-label"><strong>Edad</strong></label>
-        <input type="text" class="form-control" name="edad" placeholder="Ingresa tu edad">
-        <br>
-        <!--  -->
-        <button type="submit" name="user_save" class="btn btn-primary">Enviar formulario</button>
+session_start();
+if (isset($_SESSION['user_id'])) {
+    //Si ya está en sesión
+    header("Location: views/pages/home.php");
+    exit();
+}
+?>
 
-    </form>
+<!DOCTYPE html>
+<html lang="es" style="color-scheme: dark;">
 
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myDIV");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-    </script>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
 
+<body>
 
-<?php include("templates/footer.php"); ?>
+    <h1>Inicio(index.php)</h1>
+    <a href="views/auth/login.php">Login</a>
+    <a href="views/auth/register.php">Register</a>
+
+</body>
+
+</html>

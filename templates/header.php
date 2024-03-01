@@ -1,7 +1,5 @@
-<?php $url_base = "http://localhost/estructura_php/" ?>
-
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <title>Title</title>
@@ -16,6 +14,5 @@
 <body>
 
     <header>
-        <!-- place navbar here -->
     </header>
     <main>

@@ -2,7 +2,7 @@
 class db
 {
     private $server = "localhost";
-    private $db = "php_db";
+    private $db = "libreria";
     private $user = "root";
     private $password = "";
 

@@ -1,37 +1,50 @@
 <?php
-class userController
+require_once("../../models/userModel.php");
+
+class UserController
 {
     private $model;
 
     public function __construct()
     {
-        require_once("../../models/userModel.php");
-        $this->model = new userModel();
+        $this->model = new UserModel();
     }
 
-    public function guardar($nombre, $apellido, $edad)
+    public function login($email, $password)
     {
-        $id = $this->model->insertar($nombre, $apellido, $edad);
-        return ($id != false) ? header("Location: ../index.php") : header("Location: ../index.php");
+        // Verificar las credenciales en el modelo
+        return $this->model->checkLogin($email, $password);
     }
 
-    // public function show($id)
-    // {
-    //     return ($this->model->show($id) != false) ? $this->model->show($id) : header("Location: index.php");
-    // }
+    public function register($nombre, $apellido, $email, $password)
+    {
+        // Crear una nueva cuenta en el modelo
+        return $this->model->insertar($nombre, $apellido, $email, $password);
+    }
+    public function checkEmailExists($email)
+    {
+        // Verificar si el correo electrónico ya está registrado en el modelo
+        return $this->model->checkEmailExists($email);
+    }
 
-    // public function index()
-    // {
-    //     return ($this->model->index()) ? $this->model->index() : false;
-    // }
+    public function mostrarTablaCompra($id_usuario)
+    {
+        return $this->model->obtenerDatosTablaCompra($id_usuario);
+    }
+    public function mostrarTablaAlquiler($id_usuario)
+    {
+        return $this->model->obtenerDatosTablaAlquiler($id_usuario);
+    }
+    public function devolverLibro($id_alquiler, $id_libro)
+    {
+        if (!$this->model->existeAlquiler($id_alquiler) || !$this->model->existeLibro($id_libro)) {
+            // Si no existen, no hacer nada
+            return;
+        }
+        // Llamar al método del modelo para eliminar el alquiler
+        $this->model->eliminarAlquiler($id_alquiler);
 
-    // public function update($id, $nombre, $apellido, $fechaNa, $edad, $telefono, $email)
-    // {
-    //     return ($this->model->update($id, $nombre, $apellido, $fechaNa, $edad, $telefono, $email) != false) ? header("Location: show.php?id=" . $id) : header("Location: index.php");
-    // }
-
-    // public function delete($id)
-    // {
-    //     return ($this->model->delete($id)) ? header("Location: index.php") : header("Location: show.php?id=" . $id);
-    // }
+        // Llamar al método del modelo para actualizar la cantidad disponible del libro
+        $this->model->sumarCantidadDisponible($id_libro);
+    }
 }
