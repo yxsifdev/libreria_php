@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS `usuarios` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre` VARCHAR(50) NOT NULL,
+    `apellido` VARCHAR(50) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `password` CHAR(8) NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE libros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cantidad_total INT NOT NULL,
+    cantidad_disponible INT NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    genero VARCHAR(100),
+    descripcion TEXT,
+    disponible BOOLEAN DEFAULT true
+) ENGINE=InnoDB;
+
+CREATE TABLE compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_libro INT NOT NULL,
+    fecha_compra DATE NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_libro) REFERENCES libros(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE alquileres (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_libro INT NOT NULL,
+    fecha_alquiler DATE NOT NULL,
+    fecha_devolucion DATE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_libro) REFERENCES libros(id)
+) ENGINE=InnoDB;
